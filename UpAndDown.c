@@ -5,29 +5,33 @@
 
 int main(void)
 {
-    char input[] = "refugees code is the best";
-    bool IsUp = true;
-    int counter = 0;
-    while (input[counter] != '\0')
+    string input;
+    do
     {
-        if (input[counter] == ' ')
+        input = get_string();
+    }
+    while (input == NULL);
+
+    bool isUp = true;
+    for (int i = 0, j = strlen(input); i < j; i++)
+    {
+        if (input[i] == ' ')
         {
-            counter++;
+            printf("%c", input[i]);
         }
         else
         {
-            if (IsUp)
+            if (isUp)
             {
-                input[counter] = toupper(input[counter]);
-                counter++;
-                IsUp = false;
+                printf("%c", toupper(input[i]));
+                isUp = false;
             }
             else
             {
-                IsUp = true;
-                counter++;
+                printf("%c", input[i]);
+                isUp = true;
             }
         }
     }
-    printf("%s\n", input);
+    printf("\n");
 }

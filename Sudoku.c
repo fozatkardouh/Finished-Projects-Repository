@@ -14,14 +14,12 @@ int arr[9][9] =
     {0, 0, 0, 0, 0, 0, 0, 0, 0} ,   //  initializers for row 7
     {0, 0, 0, 0, 0, 0, 0, 0, 0} ,   //  initializers for row 8
 };
+//just to print the result
 void print(void);
 
 int main(void)
 {
-
-    //just to print the result
     print();
-
 }
 void print(void)
 {
