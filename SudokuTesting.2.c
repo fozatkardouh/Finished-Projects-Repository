@@ -1,26 +1,52 @@
 #include <stdio.h>
 #include <cs50.h>
 
-int ** findthebox(size_t columns, size_t rows);
+int ** initialiseTempAarray();
+int ** findtheArray(/*size_t columns, size_t rows*/);
 void print(int ** input);
-void freeArray(int ** arrayToBeFreed);
+void freeTempArray(int ** arrayToBeFreed);
+
+int mainArray[9][9] =
+{
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,
+    /*================================*/
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,
+    /*================================*/
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,
+};
 
 int main(void)
 {
-    int ** temp = findthebox(3,3);
-    print(temp);
-    freeArray(temp);
+    int ** findMeThisArr = findtheArray(/*3,3*/);
+    print(findMeThisArr);
+    freeTempArray(findMeThisArr);
 }
 
-int ** findthebox(size_t columns, size_t rows)
+int ** initialiseTempAarray()
 {
-    int ** array = malloc(rows * sizeof(int *));
-    for (int i = 0; i < rows; i++)
+    int ** array = malloc(3 * sizeof(int *));
+    for (int i = 0; i < 3; i++)
     {
-        array[i] = malloc(columns * sizeof(int));
-        for (int j = 0; j < columns; j++)
+        array[i] = malloc(3 * sizeof(int));
+    }
+    return array;
+}
+
+int ** findtheArray(/*size_t column, size_t row*/)
+{
+    int ** array = initialiseTempAarray();
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
         {
-            array[i][j] = i+j;
+            //next step is to change here
+            array[i][j] = 1;
         }
     }
     return array;
@@ -35,10 +61,9 @@ void print(int ** input)
             printf("%i,%i = %i\n",i , j , input[i][j]);
         }
     }
-    printf("\n");
 }
 
-void freeArray(int ** arrayToBeFreed)
+void freeTempArray(int ** arrayToBeFreed)
 {
     for (int i = 0; i < 3; ++i)
     {

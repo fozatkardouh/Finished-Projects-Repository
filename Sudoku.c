@@ -19,6 +19,7 @@ void print(void);
 
 int main(void)
 {
+    arr[2][7] = 7;
     print();
 }
 
