@@ -238,13 +238,33 @@ void printall()
 bool checkThisRow(int row)
 {
     bool onlyOnePossibility = false;
-    int columnOfThisOnePossibility = 0;
+    int columnOfThisOnePossibility = -1;
     int valueToBeSet = 0;
-    for (int i = 0; i < 9; i++)
+    for (int currentColumn = 0; currentColumn < 9; currentColumn++)
     {
-        if (mainArray[row][i] == 0)
+        if (mainArray[row][currentColumn] == 0 && columnOfThisOnePossibility == -1)
         {
-
+            onlyOnePossibility = true;
+            columnOfThisOnePossibility = currentColumn;
         }
+        else
+        {
+            onlyOnePossibility = false
+            break;
+        }
+    }
+    if (onlyOnePossibility)
+    {
+        for (int currentColumn = 0; currentColumn < 9; currentColumn++)
+        {
+            for (int numberToBeSet = 1; numberToBeSet <= 9; numberToBeSet++)
+            {
+                if (numberToBeSet != mainArray[row][currentColumn])
+                {
+
+                }
+            }
+        }
+        //mainArray[row][columnOfThisOnePossibility] =
     }
 }
