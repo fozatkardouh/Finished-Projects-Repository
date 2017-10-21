@@ -15,7 +15,7 @@ int arr[9][9] =
     {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,   //  initializers for row 8
 };
 //just to print the result
-void print(void);
+void print();
 
 int main(void)
 {
@@ -23,7 +23,7 @@ int main(void)
     print();
 }
 
-void print(void)
+void print()
 {
     for (int row = 0; row <= 8; row++)
     {

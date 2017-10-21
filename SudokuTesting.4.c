@@ -6,6 +6,7 @@ int ** findtheArray(size_t row, size_t column);
 void print(int ** input);
 void freeTempArray(int ** arrayToBeFreed);
 bool isNotSolvedYet();
+void printall();
 
 int mainArray[9][9] =
 {
@@ -24,24 +25,34 @@ int mainArray[9][9] =
 
 int main(void)
 {
-    /*now we can get the coresponding box by changing 0,0 to whatever we want
+    /*
+    now we can get the coresponding box by changing 0,0 to whatever we want
+    testing methods (to be deleted later)
     int ** findMeThisArr = findtheArray(0, 0);
     print(findMeThisArr);
-    freeTempArray(findMeThisArr);*/
-    while (isNotSolvedYet)
+    freeTempArray(findMeThisArr);
+    */
+    while (isNotSolvedYet())
     {
+        /*
+        here we start solving
+        first we see the row if only one number is missing =1=
+        then we see the column if only one number is missing =2=
+        and then we see the internal box where the we are if only one number is missing =3=
+        last, we use logic to elemniate impossible numbers =4=
+        */
         for (int i = 0; i < 9; i++)
         {
+            //=1=
             for (int j = 0; j < 9; j++)
             {
-                //here we start solving
-                //first we see the row if only one number is missing
-                //then we see the column if only one number is missing
-                //and then we see the internal box where the we are if only one number is missing
-                //last, we use logic to elemniate impossible numbers
+                //=2=
+                //=3=
+                //=4=
             }
         }
     }
+    printall();
 }
 
 bool isNotSolvedYet()
@@ -188,4 +199,52 @@ void freeTempArray(int ** arrayToBeFreed)
         free(arrayToBeFreed[i]);
     }
     free(arrayToBeFreed);
+}
+
+void printall()
+{
+    for (int row = 0; row <= 8; row++)
+    {
+        if (row % 3 == 0)
+        {
+            printf(" ==================================\n");
+        }
+        for (int column = 0; column <= 8; column++)
+        {
+            if (column % 3 == 0)
+            {
+                printf(" || %i", mainArray[row][column]);
+            }
+            else
+            {
+                if (column == 8)
+                {
+                    printf("  %i||", mainArray[row][column]);
+                }
+                else
+                {
+                    printf("  %i", mainArray[row][column]);
+                }
+            }
+        }
+        printf("\n");
+        if (row == 8)
+        {
+            printf(" ==================================\n");
+        }
+    }
+}
+
+bool checkThisRow(int row)
+{
+    bool onlyOnePossibility = false;
+    int columnOfThisOnePossibility = 0;
+    int valueToBeSet = 0;
+    for (int i = 0; i < 9; i++)
+    {
+        if (mainArray[row][i] == 0)
+        {
+
+        }
+    }
 }
