@@ -4,15 +4,15 @@
 //start the array
 int arr[9][9] =
 {
-    {0, 0, 0, 0, 0, 0, 0, 0, 0} ,   //  initializers for row 0
-    {0, 0, 0, 0, 0, 0, 0, 0, 0} ,   //  initializers for row 1
-    {0, 0, 0, 0, 0, 0, 0, 0, 0} ,   //  initializers for row 2
-    {0, 0, 0, 0, 0, 0, 0, 0, 0} ,   //  initializers for row 3
-    {0, 0, 0, 0, 0, 0, 0, 0, 0} ,   //  initializers for row 4
-    {0, 0, 0, 0, 0, 0, 0, 0, 0} ,   //  initializers for row 5
-    {0, 0, 0, 0, 0, 0, 0, 0, 0} ,   //  initializers for row 6
-    {0, 0, 0, 0, 0, 0, 0, 0, 0} ,   //  initializers for row 7
-    {0, 0, 0, 0, 0, 0, 0, 0, 0} ,   //  initializers for row 8
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,   //  initializers for row 0
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,   //  initializers for row 1
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,   //  initializers for row 2
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,   //  initializers for row 3
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,   //  initializers for row 4
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,   //  initializers for row 5
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,   //  initializers for row 6
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,   //  initializers for row 7
+    {0, 0, 0,/**/ 0, 0, 0,/**/ 0, 0, 0} ,   //  initializers for row 8
 };
 //just to print the result
 void print(void);
@@ -21,6 +21,7 @@ int main(void)
 {
     print();
 }
+
 void print(void)
 {
     for (int row = 0; row <= 8; row++)
