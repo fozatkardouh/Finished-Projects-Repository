@@ -34,10 +34,8 @@ int mainArray[9][9] =
 
 int main(void)
 {
-    int counter = 0;
     while (isNotSolvedYet())
     {
-        counter++;
         for (int i = 0; i < 9; i++)
         {
             finishThisRow(i);
@@ -47,11 +45,6 @@ int main(void)
             {
                 useUrBrainForThisOne(i, j);
             }
-        }
-        if (counter % 10 == 0)
-        {
-            counter = 0;
-            printall();
         }
     }
     printall();
