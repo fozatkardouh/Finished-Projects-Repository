@@ -103,10 +103,10 @@ int ** findtheArray(size_t row, size_t column)
     int adjustingVariableForColumn = 0;
     switch (row)
     {
-        case 3 ... 6:
+        case 3 ... 5:
             adjustingVariableForRow = 3;
             break;
-        case 7 ... 8:
+        case 6 ... 8:
             adjustingVariableForRow = 6;
             break;
         default:
@@ -114,10 +114,10 @@ int ** findtheArray(size_t row, size_t column)
     }
     switch (column)
     {
-        case 3 ... 6:
+        case 3 ... 5:
             adjustingVariableForColumn = 3;
             break;
-        case 7 ... 8:
+        case 6 ... 8:
             adjustingVariableForColumn = 6;
             break;
         default:
