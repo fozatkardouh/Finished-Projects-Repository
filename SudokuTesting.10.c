@@ -8,6 +8,8 @@ int ** findtheArray(size_t row, size_t column);
 void freeTempArray(int ** arrayToBeFreed);
 
 bool findNumberInArray(int num, int ** arr);
+bool checkNumInRow (int row , int num);
+bool checkNumInColumn (int column , int num);
 
 void finishThisRow(int row);
 void finishThisColumn(int column);
@@ -29,13 +31,15 @@ int mainArray[9][9] =
     /*================================*/
     {7, 0, 4,/**/ 0, 6, 0,/**/ 2, 9, 8} ,
     {0, 6, 8,/**/ 3, 2, 0,/**/ 7, 0, 0} ,
-    {0, 1, 2,/**/ 0, 9, 0,/**/ 6, 4, 2} ,
+    {0, 1, 2,/**/ 0, 9, 0,/**/ 6, 4, 3} ,
 };
 
 int main(void)
 {
+    int c = 0;
     while (isNotSolvedYet())
     {
+        c++;
         for (int i = 0; i < 9; i++)
         {
             finishThisRow(i);
@@ -45,6 +49,11 @@ int main(void)
             {
                 useUrBrainForThisOne(i, j);
             }
+        }
+        if (c % 15 == 0)
+        {
+            c = 0;
+            printall();
         }
     }
     printall();
@@ -312,38 +321,27 @@ void finishThisBox(int numOfBox)
                 numberToBeSet -= findMeThisArr[row][column];
             }
         }
-        freeTempArray(findMeThisArr);
         mainArray[locationThisOnePossibility[0] + adjustingVariableForRow][locationThisOnePossibility[1] + adjustingVariableForColumn] = numberToBeSet;
     }
-    else
-    {
-        freeTempArray(findMeThisArr);
-    }
+    freeTempArray(findMeThisArr);
 }
 
-//for one elemnt of the main array
-//here we teach the computer to get a list of all the forbiden numbers to use
-//according to row, column and box
-//if the list consists of only one number we assign it.
 void useUrBrainForThisOne(int row, int column)
 {
     bool numbersThatExist[9] = { false, false, false, false, false, false, false, false, false };
     int ** thisArray = findtheArray(row, column);
     for (int numberToCheck = 1; numberToCheck <= 9; numberToCheck++)
     {
-        for (int i = 0; i < 9; i++)
+        if (checkNumInRow(row, numberToCheck) || checkNumInColumn(column, numberToCheck) || findNumberInArray(numberToCheck, thisArray))
         {
-            if (mainArray[i][column] == numberToCheck || mainArray[row][i] == numberToCheck || findNumberInArray(numberToCheck, thisArray))
-            {
-                numbersThatExist[numberToCheck-1] = true;
-            }
+            numbersThatExist[numberToCheck-1] = true;
         }
     }
     freeTempArray(thisArray);
     int numberOfPossibilities = 0;
     for (int x = 0; x < 9; x++)
     {
-        if(numbersThatExist[x])
+        if(!numbersThatExist[x])
         {
             numberOfPossibilities++;
         }
@@ -359,4 +357,28 @@ void useUrBrainForThisOne(int row, int column)
             }
         }
     }
+}
+
+bool checkNumInRow (int row , int num)
+{
+    for (int i = 0; i < 9; i++)
+    {
+        if(mainArray[row][i] == num)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool checkNumInColumn (int column , int num)
+{
+    for (int i = 0; i < 9; i++)
+    {
+        if(mainArray[i][column] == num)
+        {
+            return true;
+        }
+    }
+    return false;
 }
