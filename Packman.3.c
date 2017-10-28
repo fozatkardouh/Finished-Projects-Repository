@@ -3,24 +3,32 @@
 
 int locationOfPackman[2];
 int locationOfGhost[2];
-int route[50][2] =
+int route[108][2] =
 {
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
+    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },    { 0, 0 },
 };
 int mainArray[18][18] =
 {
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} ,
     {1,3,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1} , //Packman here at 1.1
-    {1,0,1,1,1,1,0,1,1,1,0,0,0,1,0,1,0,1} ,
+    {1,1,1,1,1,1,0,1,1,1,0,0,0,1,0,1,0,1} ,
     {1,0,0,0,0,0,0,0,1,1,0,1,0,1,0,1,0,1} ,
     {1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,0,1} ,
     {1,0,1,0,1,1,1,1,0,1,0,1,0,1,1,1,0,1} ,
@@ -38,7 +46,7 @@ int mainArray[18][18] =
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} ,
 };
 int heading = 0; //stationary|| 1 moving to the right || 2 moving up || 3 moving to the left || 4 moving down
-int minNumberOfMoves = 50;
+int minNumberOfMoves = 108;
 
 void LocateGhost()
 {
@@ -78,10 +86,18 @@ void LocatePackman()
     }
 }
 
-bool runTheGhost(int locOfGhost[2], int currentRoute[50][2], int counterOfMoves, int lastHeading)
+void copyArray(int currentRoute[108][2], int movesDone)
 {
-    //looping like an idiot
-    if (counterOfMoves >= 50)
+    for (int x = 0; x < movesDone; x++)
+    {
+        route[x][0] = currentRoute[x][0];
+        route[x][1] = currentRoute[x][1];
+    }
+}
+
+bool runTheGhost(int locOfGhost[2], int currentRoute[108][2], int counterOfMoves, int lastHeading)
+{
+    if (counterOfMoves >= 108)
     {
         return false;
     }
@@ -89,20 +105,14 @@ bool runTheGhost(int locOfGhost[2], int currentRoute[50][2], int counterOfMoves,
     //reached packman
     if (mainArray[locOfGhost[0]][locOfGhost[1]] == 3)
     {
-        //new shortest path found
         if (counterOfMoves < minNumberOfMoves)
         {
             minNumberOfMoves = counterOfMoves;
             currentRoute[counterOfMoves][0] = locOfGhost[0];
             currentRoute[counterOfMoves][1] = locOfGhost[1];
-            for (int x = 0; x < minNumberOfMoves + 10; x++)
-            {
-                route[x][0] = currentRoute[x][0];
-                route[x][1] = currentRoute[x][1];
-            }
+            copyArray(currentRoute, counterOfMoves);
             return true;
         }
-        //not the shortest path yet
         else
         {
             return false;
@@ -146,12 +156,10 @@ bool runTheGhost(int locOfGhost[2], int currentRoute[50][2], int counterOfMoves,
             currentRoute[counterOfMoves][1] = newLocationOfGhost[1];
             runTheGhost(newLocationOfGhost, currentRoute, counterOfMoves + 1, 4);
         }
-        // no path found at all
-        if (minNumberOfMoves == 50)
+        if (minNumberOfMoves == 108)
         {
             return false;
         }
-        // because C is dump as shit
         else
         {
             return true;
@@ -159,24 +167,24 @@ bool runTheGhost(int locOfGhost[2], int currentRoute[50][2], int counterOfMoves,
     }
 }
 
-void printTheRoute()
+void printTheRoute(int moves)
 {
     printf("%i, %i\n", locationOfGhost[0], locationOfGhost[1]);
-    for (int i = 0; i < minNumberOfMoves; i++)
+    for (int i = 0; i < moves; i++)
     {
         printf("%i, %i\n", route[i][0], route[i][1]);
     }
+    printf("%i, %i\n", locationOfPackman[0], locationOfPackman[1]);
 }
 
 int main(void)
 {
     LocatePackman();
     LocateGhost();
-    int tempPath[50][2];
-    if (runTheGhost(locationOfGhost, tempPath, 0, heading))
+    if (runTheGhost(locationOfGhost,route, 0, heading))
     {
         printf("Success in %i moves.\n", minNumberOfMoves);
-        printTheRoute();
+        printTheRoute(minNumberOfMoves - 1);
         return 0;
     }
     else
