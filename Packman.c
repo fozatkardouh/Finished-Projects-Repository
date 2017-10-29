@@ -28,12 +28,12 @@ int mainArray[18][18] =
     {1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1} ,
     {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1} ,
     {1,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1} ,
-    {1,1,1,0,1,0,1,0,1,1,0,1,0,0,0,1,0,1} ,
+    {1,0,1,0,1,0,1,0,1,1,0,1,0,0,0,1,0,1} ,
     {1,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,1} ,
     {1,0,1,1,1,1,1,0,1,1,1,1,0,1,0,1,0,1} ,
     {1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1} ,
     {1,0,1,0,1,0,1,1,1,1,1,0,1,1,0,0,0,1} ,
-    {1,0,1,1,1,0,1,0,0,0,1,0,1,1,1,1,0,1} ,
+    {1,0,1,0,1,0,1,0,0,0,1,0,1,1,1,1,0,1} ,
     {1,0,0,0,1,0,0,0,1,0,0,0,1,2,0,0,0,1} , //ghost here at 16.13
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} ,
 };
@@ -95,7 +95,7 @@ bool runTheGhost(int locOfGhost[2], int currentRoute[50][2], int counterOfMoves,
             minNumberOfMoves = counterOfMoves;
             currentRoute[counterOfMoves][0] = locOfGhost[0];
             currentRoute[counterOfMoves][1] = locOfGhost[1];
-            for (int x = 0; x < minNumberOfMoves + 10; x++)
+            for (int x = 0; x < minNumberOfMoves; x++)
             {
                 route[x][0] = currentRoute[x][0];
                 route[x][1] = currentRoute[x][1];
