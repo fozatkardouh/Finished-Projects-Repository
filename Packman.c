@@ -1,21 +1,15 @@
+/*******************************************
+* This program calculates the shortest path from the ghost to Pacman.
+* It returns the step by step path.
+*
+* Written for R*c by Fozat Kardouh 29.10.2017
+********************************************/
+
 #include <stdio.h>
 #include <cs50.h>
 
-int locationOfPackman[2];
 int locationOfGhost[2];
-int route[50][2] =
-{
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-    { 0, 0 },    { 0, 0 },    { 0, 0 },     { 0, 0 },    { 0, 0 },
-};
+int route[50][2];
 int mainArray[18][18] =
 {
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} ,
@@ -52,25 +46,6 @@ void LocateGhost()
             {
                 locationOfGhost[0] = row;
                 locationOfGhost[1] = column;
-                breakMe = true;
-                break;
-            }
-        }
-    }
-}
-
-void LocatePackman()
-{
-    bool breakMe = false;
-    for (int row = 0; row < 18; row++)
-    {
-        if (breakMe){ break; }
-        for (int column = 0; column < 18; column++)
-        {
-            if (mainArray[row][column] == 3)
-            {
-                locationOfPackman[0] = row;
-                locationOfPackman[1] = column;
                 breakMe = true;
                 break;
             }
@@ -170,7 +145,6 @@ void printTheRoute()
 
 int main(void)
 {
-    LocatePackman();
     LocateGhost();
     int tempPath[50][2];
     if (runTheGhost(locationOfGhost, tempPath, 0, heading))
