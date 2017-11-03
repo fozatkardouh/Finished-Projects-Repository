@@ -36,18 +36,14 @@ int minNumberOfMoves = 50;
 
 void LocateGhost()
 {
-    bool breakMe = false;
     for (int row = 0; row < 18; row++)
     {
-        if (breakMe){ break; }
         for (int column = 0; column < 18; column++)
         {
             if (mainArray[row][column] == 2)
             {
                 locationOfGhost[0] = row;
                 locationOfGhost[1] = column;
-                breakMe = true;
-                break;
             }
         }
     }
