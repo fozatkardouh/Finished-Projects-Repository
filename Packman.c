@@ -8,154 +8,192 @@
 #include <stdio.h>
 #include <cs50.h>
 
-int locationOfGhost[2];
-int route[50][2];
-int mainArray[18][18] =
-{
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} ,
-    {1,3,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1} , //Packman here at 1.1
-    {1,0,1,1,1,1,0,1,1,1,0,0,0,1,0,1,0,1} ,
-    {1,0,0,0,0,0,0,0,1,1,0,1,0,1,0,1,0,1} ,
-    {1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,0,1} ,
-    {1,0,1,0,1,1,1,1,0,1,0,1,0,1,1,1,0,1} ,
-    {1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1} ,
-    {1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1} ,
-    {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1} ,
-    {1,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1} ,
-    {1,0,1,0,1,0,1,0,1,1,0,1,0,0,0,1,0,1} ,
-    {1,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,1} ,
-    {1,0,1,1,1,1,1,0,1,1,1,1,0,1,0,1,0,1} ,
-    {1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1} ,
-    {1,0,1,0,1,0,1,1,1,1,1,0,1,1,0,0,0,1} ,
-    {1,0,1,0,1,0,1,0,0,0,1,0,1,1,1,1,0,1} ,
-    {1,0,0,0,1,0,0,0,1,0,0,0,1,2,0,0,0,1} , //ghost here at 16.13
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} ,
-};
-int heading = 0; //stationary|| 1 moving to the right || 2 moving up || 3 moving to the left || 4 moving down
-int minNumberOfMoves = 50;
+#define SIZE 18
+#define MAX_NUMBER_OF_MOVES 50
+#define WALL 1
+#define GHOST 2
+#define PACKMAN 3
 
-void LocateGhost()
+#define STATIONARY 0
+#define RIGHT 1
+#define UP 2
+#define LEFT 3
+#define DOWN 4
+
+void locateGhost();
+bool findThePackman(int ghost[2], int currentRoute[MAX_NUMBER_OF_MOVES][2], int moves, int lastDirection);
+bool isGhostMakingTooMany(int moves);
+bool isPackmanFound(int ghost[2]);
+bool isShortestPathFound(int ghost[2], int currentRoute[MAX_NUMBER_OF_MOVES][2], int moves);
+void updateShortestPath(int ghost[2], int currentRoute[MAX_NUMBER_OF_MOVES][2], int moves);
+void move(int ghost[2], int direction, int lastDirection, int currentRoute[MAX_NUMBER_OF_MOVES][2], int moves);
+bool isValidDirection(int ghost[2], int direction, int lastDirection);
+bool isPathFound();
+void printTheRoute();
+
+int map[SIZE][SIZE] =   {
+                            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} ,
+                            {1,3,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1} , //Packman here at 1.1
+                            {1,0,1,1,1,1,0,1,1,1,0,0,0,1,0,1,0,1} ,
+                            {1,0,0,0,0,0,0,0,1,1,0,1,0,1,0,1,0,1} ,
+                            {1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,0,1} ,
+                            {1,0,1,0,1,1,1,1,0,1,0,1,0,1,1,1,0,1} ,
+                            {1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1} ,
+                            {1,0,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1} ,
+                            {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1} ,
+                            {1,0,1,0,1,1,1,0,1,1,0,1,1,1,0,1,1,1} ,
+                            {1,0,1,0,1,0,1,0,1,1,0,1,0,0,0,1,0,1} ,
+                            {1,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,1} ,
+                            {1,0,1,1,1,1,1,0,1,1,1,1,0,1,0,1,0,1} ,
+                            {1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1} ,
+                            {1,0,1,0,1,0,1,1,1,1,1,0,1,1,0,0,0,1} ,
+                            {1,0,1,0,1,0,1,0,0,0,1,0,1,1,1,1,0,1} ,
+                            {1,0,0,0,1,0,0,0,1,0,0,0,1,2,0,0,0,1} , //ghost here at 16.13
+                            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} ,
+                        };
+
+int locationOfGhost[2] = {0, 0};
+int route[50][2];
+
+int heading = STATIONARY;
+int minNumberOfMoves = MAX_NUMBER_OF_MOVES;
+
+int main(void)
 {
-    bool breakMe = false;
-    for (int row = 0; row < 18; row++)
+    int tempPath[MAX_NUMBER_OF_MOVES][2];
+
+    locateGhost();
+    bool packmanFound = findThePackman(locationOfGhost, tempPath, STATIONARY, heading);
+    if (!packmanFound)
     {
-        if (breakMe){ break; }
-        for (int column = 0; column < 18; column++)
+        printf("Shit\n");
+        return 1;
+    }
+
+    printf("Success in %i moves.\n", minNumberOfMoves);
+    printTheRoute();
+    return 0;
+}
+
+void locateGhost()
+{
+    for (int row = 0; row < SIZE; row++)
+    {
+        for (int column = 0; column < SIZE; column++)
         {
-            if (mainArray[row][column] == 2)
+            if (map[row][column] == GHOST)
             {
                 locationOfGhost[0] = row;
                 locationOfGhost[1] = column;
-                breakMe = true;
-                break;
+                return;
             }
         }
     }
 }
 
-bool runTheGhost(int locOfGhost[2], int currentRoute[50][2], int counterOfMoves, int lastHeading)
+bool findThePackman(int ghost[2], int currentRoute[MAX_NUMBER_OF_MOVES][2], int moves, int lastDirection)
 {
-    //looping like an idiot
-    if (counterOfMoves >= 50)
+    if(isGhostMakingTooMany(moves))
     {
         return false;
     }
-    int newLocationOfGhost[2] = { 0, 0 };
-    //reached packman
-    if (mainArray[locOfGhost[0]][locOfGhost[1]] == 3)
+
+    if(isPackmanFound(ghost))
     {
-        //new shortest path found
-        if (counterOfMoves < minNumberOfMoves)
-        {
-            minNumberOfMoves = counterOfMoves;
-            currentRoute[counterOfMoves][0] = locOfGhost[0];
-            currentRoute[counterOfMoves][1] = locOfGhost[1];
-            for (int x = 0; x < minNumberOfMoves; x++)
-            {
-                route[x][0] = currentRoute[x][0];
-                route[x][1] = currentRoute[x][1];
-            }
-            return true;
-        }
-        //not the shortest path yet
-        else
-        {
-            return false;
-        }
+        return isShortestPathFound(ghost, currentRoute, moves);
     }
-    else
+
+    move(ghost, UP, lastDirection, currentRoute, moves);
+    move(ghost, DOWN, lastDirection, currentRoute, moves);
+    move(ghost, RIGHT, lastDirection, currentRoute, moves);
+    move(ghost, LEFT, lastDirection, currentRoute, moves);
+
+    return isPathFound();
+}
+
+bool isGhostMakingTooMany(int moves)
+{
+    return moves >= MAX_NUMBER_OF_MOVES;
+}
+
+bool isPackmanFound(int ghost[2])
+{
+    return map[ghost[0]][ghost[1]] == PACKMAN;
+}
+
+bool isShortestPathFound(int ghost[2], int currentRoute[MAX_NUMBER_OF_MOVES][2], int moves)
+{
+    if (moves < minNumberOfMoves)
     {
-        // going right
-        if (mainArray[locOfGhost[0]][locOfGhost[1] + 1] != 1 && lastHeading != 3)
-        {
-            newLocationOfGhost[0] = locOfGhost[0];
-            newLocationOfGhost[1] = locOfGhost[1] + 1;
-            currentRoute[counterOfMoves][0] = newLocationOfGhost[0];
-            currentRoute[counterOfMoves][1] = newLocationOfGhost[1];
-            runTheGhost(newLocationOfGhost, currentRoute, counterOfMoves + 1, 1);
-        }
-        //going up
-        if (mainArray[locOfGhost[0] - 1][locOfGhost[1]] != 1 && lastHeading != 4)
-        {
-            newLocationOfGhost[0] = locOfGhost[0] - 1;
-            newLocationOfGhost[1] = locOfGhost[1];
-            currentRoute[counterOfMoves][0] = newLocationOfGhost[0];
-            currentRoute[counterOfMoves][1] = newLocationOfGhost[1];
-            runTheGhost(newLocationOfGhost, currentRoute, counterOfMoves + 1, 2);
-        }
-        // going left
-        if (mainArray[locOfGhost[0]][locOfGhost[1] - 1] != 1 && lastHeading != 1)
-        {
-            newLocationOfGhost[0] = locOfGhost[0];
-            newLocationOfGhost[1] = locOfGhost[1] - 1;
-            currentRoute[counterOfMoves][0] = newLocationOfGhost[0];
-            currentRoute[counterOfMoves][1] = newLocationOfGhost[1];
-            runTheGhost(newLocationOfGhost, currentRoute, counterOfMoves + 1, 3);
-        }
-        // going down
-        if (mainArray[locOfGhost[0] + 1][locOfGhost[1]] != 1 && lastHeading != 2)
-        {
-            newLocationOfGhost[0] = locOfGhost[0] + 1;
-            newLocationOfGhost[1] = locOfGhost[1];
-            currentRoute[counterOfMoves][0] = newLocationOfGhost[0];
-            currentRoute[counterOfMoves][1] = newLocationOfGhost[1];
-            runTheGhost(newLocationOfGhost, currentRoute, counterOfMoves + 1, 4);
-        }
-        // no path found at all
-        if (minNumberOfMoves == 50)
-        {
-            return false;
-        }
-        // because C is dump as shit
-        else
-        {
-            return true;
-        }
+        updateShortestPath(ghost, currentRoute, moves);
+        return true;
     }
+    return false;
+}
+
+void updateShortestPath(int ghost[2], int currentRoute[MAX_NUMBER_OF_MOVES][2], int moves)
+{
+    minNumberOfMoves = moves;
+    currentRoute[moves][0] = ghost[0];
+    currentRoute[moves][1] = ghost[1];
+    for (int x = 0; x < minNumberOfMoves; x++)
+    {
+        route[x][0] = currentRoute[x][0];
+        route[x][1] = currentRoute[x][1];
+    }
+    printf("%i, %i\n", ghost[0], ghost[1]);
+}
+
+void move(int ghost[2], int direction, int lastDirection, int currentRoute[MAX_NUMBER_OF_MOVES][2], int moves)
+{
+    int nextStep[2] = {ghost[0], ghost[1]};
+    switch (direction)
+    {
+        case RIGHT:
+            nextStep[1] -= 1;
+        break;
+
+        case LEFT:
+            nextStep[1] += 1;
+        break;
+
+        case UP:
+            nextStep[0] -= 1;
+        break;
+
+        case DOWN:
+            nextStep[0] += 1;
+        break;
+
+        default:
+        break;
+    }
+
+    if(!isValidDirection(nextStep, direction, lastDirection))
+    {
+        return;
+    }
+
+    currentRoute[moves][0] = nextStep[0];
+    currentRoute[moves][1] = nextStep[1];
+    findThePackman(nextStep, currentRoute, moves + 1, direction);
+}
+
+bool isValidDirection(int nextStep[2], int direction, int lastDirection)
+{
+    return map[nextStep[0]][nextStep[1]] != WALL && direction != lastDirection;
+}
+
+bool isPathFound()
+{
+    return minNumberOfMoves < MAX_NUMBER_OF_MOVES;
 }
 
 void printTheRoute()
 {
     printf("%i, %i\n", locationOfGhost[0], locationOfGhost[1]);
-    for (int i = 0; i < minNumberOfMoves; i++)
+    for (int moveNumber = 0; moveNumber < minNumberOfMoves; moveNumber++)
     {
-        printf("%i, %i\n", route[i][0], route[i][1]);
-    }
-}
-
-int main(void)
-{
-    LocateGhost();
-    int tempPath[50][2];
-    if (runTheGhost(locationOfGhost, tempPath, 0, heading))
-    {
-        printf("Success in %i moves.\n", minNumberOfMoves);
-        printTheRoute();
-        return 0;
-    }
-    else
-    {
-        printf("Shit\n");
-        return 1;
+        printf("%i, %i\n", route[moveNumber][0], route[moveNumber][1]);
     }
 }
