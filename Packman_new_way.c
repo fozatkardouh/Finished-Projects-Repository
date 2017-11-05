@@ -56,7 +56,6 @@ int map[SIZE][SIZE] =   {
 int locationOfGhost[2] = {0, 0};
 int route[50][2];
 
-int heading = STATIONARY;
 int minNumberOfMoves = MAX_NUMBER_OF_MOVES;
 
 int main(void)

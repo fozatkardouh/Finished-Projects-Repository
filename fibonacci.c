@@ -1,34 +1,35 @@
 #include <stdio.h>
 #include <cs50.h>
 
-char inputOne[] =
+char input[2][100] =
 {
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '0',
+    {
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '0',
+    } ,
+    {
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+        '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '1',
 
+    }
 };
-char inputTwo[] =
-{
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
-    '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '1',
 
-};
 int tempRotation[] =
 {
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -43,13 +44,12 @@ int tempRotation[] =
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 
 };
+
 void setRotation();
-int getIntFromChar(char c);
-char getCharFromInt(int i);
-void moveTempToInput(bool handel);
+void moveTempToInput(int targetArr);
 bool resetNotCompleted();
 void addTheTwo();
-void printIt(int inputNumber);
+void printIt(int targetArr);
 
 int main()
 {
@@ -62,100 +62,14 @@ int main()
         } while (resetNotCompleted());
         if (i % 2 == 0)
         {
-            moveTempToInput(true);
+            moveTempToInput(0);
+            printIt(0);
         }
         else
         {
-            moveTempToInput(false);
-        }
-        if (i % 2 == 0)
-        {
+            moveTempToInput(1);
             printIt(1);
         }
-        else
-        {
-            printIt(2);
-        }
-    }
-}
-
-int getIntFromChar(char c)
-{
-    switch (c)
-    {
-        case '0':
-            return 0;
-            break;
-        case '1':
-            return 1;
-            break;
-        case '2':
-            return 2;
-            break;
-        case '3':
-            return 3;
-            break;
-        case '4':
-            return 4;
-            break;
-        case '5':
-            return 5;
-            break;
-        case '6':
-            return 6;
-            break;
-        case '7':
-            return 7;
-            break;
-        case '8':
-            return 8;
-            break;
-        case '9':
-            return 9;
-            break;
-        default:
-            return 0;
-            break;
-    }
-}
-
-char getCharFromInt(int i)
-{
-    switch (i)
-    {
-        case 0:
-            return '0';
-            break;
-        case 1:
-            return '1';
-            break;
-        case 2:
-            return '2';
-            break;
-        case 3:
-            return '3';
-            break;
-        case 4:
-            return '4';
-            break;
-        case 5:
-            return '5';
-            break;
-        case 6:
-            return '6';
-            break;
-        case 7:
-            return '7';
-            break;
-        case 8:
-            return '8';
-            break;
-        case 9:
-            return '9';
-            break;
-        default:
-            return '0';
-            break;
     }
 }
 
@@ -175,24 +89,21 @@ void setRotation()
                 tempRotation[x - 1]++;
             }
         }
+        if (tempRotation[x] == -1)
+        {
+            break;
+        }
     }
 
 }
 
-void moveTempToInput(bool handel)
+void moveTempToInput(int targetArr)
 {
     for (int x = 99; x != -1; x--)
     {
         if (tempRotation[x] != -1)
         {
-            if (handel)
-            {
-                inputOne[x] = getCharFromInt(tempRotation[x]);
-            }
-            else
-            {
-                inputTwo[x] = getCharFromInt(tempRotation[x]);
-            }
+            input[targetArr][x] = tempRotation[x] + 48;
         }
         else
         {
@@ -211,7 +122,7 @@ bool resetNotCompleted()
         }
         if (tempRotation[x] == -1)
         {
-            return false;
+            break;
         }
     }
     return false;
@@ -221,9 +132,9 @@ void addTheTwo()
 {
     for (int j = 99; j != -1; j--)
     {
-        if (inputOne[j] != '\0' && inputTwo[j] != '\0')
+        if (input[0][j] != '\0' && input[1][j] != '\0')
         {
-            tempRotation[j] = getIntFromChar(inputOne[j]) + getIntFromChar(inputTwo[j]);
+            tempRotation[j] = input[0][j] - 48 + input[1][j] - 48;
         }
         else
         {
@@ -232,17 +143,13 @@ void addTheTwo()
     }
 }
 
-void printIt(int inputNumber)
+void printIt(int targetArr)
 {
     for (int x = 0; x < 100; x++)
     {
-        if (inputNumber == 1 && inputOne[x] != '\0')
+        if (input[targetArr][x] != '\0')
         {
-            printf("%c", inputOne[x]);
-        }
-        if (inputNumber == 2 && inputTwo[x] != '\0')
-        {
-            printf("%c", inputTwo[x]);
+            printf("%c", input[targetArr][x]);
         }
     }
     printf("\n");
