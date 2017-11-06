@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <cs50.h>
 
-char input[2][100] =
+char inputArray[2][100] =
 {
     {
         '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
@@ -45,35 +45,31 @@ int tempRotation[] =
 
 };
 
-void setRotation();
-void moveTempToInput(int targetArr);
-bool resetNotCompleted();
-void addTheTwo();
-void printIt(int targetArr);
+void setRotationOfTempArray();
+void copyTempArrayToInput(int targetArr);
+void addTheTwoArrays();
+void printInputArray(int targetArr);
 
 int main()
 {
     for (int i = 0; i < 479; i++)
     {
-        addTheTwo();
-        do
-        {
-            setRotation();
-        } while (resetNotCompleted());
+        addTheTwoArrays();
+        setRotationOfTempArray();
         if (i % 2 == 0)
         {
-            moveTempToInput(0);
-            printIt(0);
+            copyTempArrayToInput(0);
+            printInputArray(0);
         }
         else
         {
-            moveTempToInput(1);
-            printIt(1);
+            copyTempArrayToInput(1);
+            printInputArray(1);
         }
     }
 }
 
-void setRotation()
+void setRotationOfTempArray()
 {
     for (int x = 99; x != -1; x--)
     {
@@ -97,59 +93,48 @@ void setRotation()
 
 }
 
-void moveTempToInput(int targetArr)
+void copyTempArrayToInput(int targetArr)
 {
     for (int x = 99; x != -1; x--)
     {
-        if (tempRotation[x] != -1)
-        {
-            input[targetArr][x] = tempRotation[x] + 48;
-        }
-        else
-        {
-            break;
-        }
-    }
-}
-
-bool resetNotCompleted()
-{
-    for (int x = 99; x != -1; x--)
-    {
-        if (tempRotation[x] >= 10)
-        {
-            return true;
-        }
         if (tempRotation[x] == -1)
         {
             break;
         }
+        inputArray[targetArr][x] = tempRotation[x] + 48;
     }
-    return false;
 }
 
-void addTheTwo()
+void addTheTwoArrays()
 {
     for (int j = 99; j != -1; j--)
     {
-        if (input[0][j] != '\0' && input[1][j] != '\0')
+        if (inputArray[0][j] != '\0' && inputArray[1][j] != '\0')
         {
-            tempRotation[j] = input[0][j] - 48 + input[1][j] - 48;
+            tempRotation[j] = inputArray[0][j] - 48 + inputArray[1][j] - 48;
         }
         else
         {
             break;
         }
+
+        /* doesn't work (don't know why)
+        if (inputArray[0][j] == '\0' && inputArray[1][j] == '\0')
+        {
+            break;
+        }
+        tempRotation[j] = inputArray[0][j] - 48 + inputArray[1][j] - 48;
+        */
     }
 }
 
-void printIt(int targetArr)
+void printInputArray(int targetArr)
 {
     for (int x = 0; x < 100; x++)
     {
-        if (input[targetArr][x] != '\0')
+        if (inputArray[targetArr][x] != '\0')
         {
-            printf("%c", input[targetArr][x]);
+            printf("%c", inputArray[targetArr][x]);
         }
     }
     printf("\n");
